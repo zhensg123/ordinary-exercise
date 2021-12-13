@@ -85,15 +85,15 @@
             let all = document.querySelectorAll('.viewArea .item'); 
             // 设置数据列表的总高度
             // document.querySelector('.container .content').style.height = itemHeight * total + 'px';
-            updateDom(start, pageSize);
+            updateDom(start, pageSize, 0);
             
             //更新渲染列表的高度和数据
-            function updateDom(start, pageSize) {
+            function updateDom(start, pageSize, scrollTop) {
                 const fragment = document.createDocumentFragment();
                 // document.querySelector('.container .content .viewArea').style.transform = 'translateY(' + height + 'px)';
                 for (var i = start, itemIndex = 0, len = start + pageSize; i < len; i++, itemIndex++) {
                     all[itemIndex].innerHTML = i;
-                    all[itemIndex].style.cssText = `top:${i*50}px;`;
+                    all[itemIndex].style.cssText = `top:${i*50 - scrollTop % 12}px;`;
                 }
             }
             // 滚动处理函数
@@ -108,7 +108,7 @@
 
                     if(start <= 88) {
                         console.log(start, currentScrollTop, 'startstart拉米娜')
-                        updateDom(start, pageSize)
+                        updateDom(start, pageSize, currentScrollTop)
                     }
             }
 
