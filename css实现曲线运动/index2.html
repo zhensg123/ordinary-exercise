@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>曲线运动</title>
+    <style>
+        .y-container {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgb(85, 63, 63);
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: left 4s linear, top 4s cubic-bezier(.66, .1, 1, .41);
+        }
+        .box {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        .box:hover .y-container{
+          left: 400px;
+          top: 400px;
+        }
+        @keyframes xMove {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(400px);
+            }
+        }
+
+        @keyframes yMove {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(400px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+   <div class="box">
+    <div class='y-container'></div>
+   </div>
+    <script>
+        setTimeout(()=>{
+
+        })
+    </script>
+</body>
+
+</html>
