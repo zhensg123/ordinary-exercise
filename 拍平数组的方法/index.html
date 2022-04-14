@@ -11,6 +11,13 @@
           var arr = [2,3,4,5,[3,4,5,[343,4]]]
           arr.flat(Infinity)
           console.log(arr.flat(Infinity))
+
+          const arr1 = [[4], [2, [3]], [1]]
+         function flat(arr){
+           return [].concat(...arr.map((item)=>{
+             return Array.isArray(item) ? flat(item) : item
+           }))
+         }
         </script>
 </body>
 </html>
