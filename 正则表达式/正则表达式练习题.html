@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正则表达式练习题</title>
+</head>
+<body>
+    <script>
+        // 去重复
+        // 将"aaaaaabbbbbbbccccccc"转化为"abc"
+        var str = "aaaaaabbbbbbbccccccc";
+var reg = /(\w)\1*(\w)\2*(\w)\3*/g;
+console.log(str.replace(reg,"$1$2$3"));
+
+
+// https://www.jb51.net/article/114065.htm
+
+// 匹配含有特定字符
+const a = /a/g
+console.log(a.test('abcd'), 0)
+// 匹配结尾是特定字符的
+const b = /b$/
+console.log(b.test('b'))
+// 匹配开始字符
+const c = /^c/i
+
+console.log(c.test('C'))
+
+// 匹配特定数量
+
+//
+
+    </script>
+</body>
+</html>
