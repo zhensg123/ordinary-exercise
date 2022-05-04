@@ -12,9 +12,15 @@ export default class Compile {
 
     init() {
         if (this.el) {
+            console.log(this.el, '3322')
             this.fragment = this.nodeToFragment(this.el);
+            console.log(this.fragment, 'fragment', this.el)
+            // 编译这段片段
             this.compileElement(this.fragment);
             this.el.appendChild(this.fragment);
+            console.log(this.fragment, 'fragm22222222ent', this.el)
+
+
         } else {
             console.log('Dom元素不存在');
         }
@@ -23,10 +29,13 @@ export default class Compile {
         let fragment = document.createDocumentFragment();
         let child = el.firstChild;
         while (child) {
+            console.log(child, '(thischild.el')
             // 将Dom元素移入fragment中
             fragment.appendChild(child);
             child = el.firstChild
         }
+        console.log(this.el, '(this.el')
+
         return fragment;
     }
     compileElement(el) {
@@ -34,9 +43,10 @@ export default class Compile {
         [].slice.call(childNodes).forEach((node)=> {
             let reg = /\{\{(.*)\}\}/;
             let text = node.textContent;
-
+            // 元素节点
             if (this.isElementNode(node)) {
                 this.compile(node);
+                // 文本节点
             } else if (this.isTextNode(node) && reg.test(text)) {
                 this.compileText(node, reg.exec(text)[1]);
             }

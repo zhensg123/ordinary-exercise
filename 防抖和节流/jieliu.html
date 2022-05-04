@@ -24,10 +24,24 @@
                 }
             }
         }
-        function test(){
+        // 防抖动函数
+        function throttle1(fn, wait = 100) {
+            let timer;
+            return function () {
+                if (timer) {
+                    return 
+                }
+                timer = setTimeout(() => {
+                    fn.apply(this, null)
+                    clearTimeout(timer)
+                    timer = null
+                }, wait)
+            }
+        }
+        function test() {
             console.log(9999909090)
         }
-        window.addEventListener('scroll',throttle(test,1000))
+        window.addEventListener('scroll', throttle(test, 1000))
     </script>
 </body>
 

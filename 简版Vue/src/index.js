@@ -14,7 +14,7 @@ class myVue {
         
         // 重新定义this.data数据，用defineProperty重新定义数据
         observe(this.data);
-
+        
         // 创建编译模板以及编译赋值
         new Compile(options.el, this);
         

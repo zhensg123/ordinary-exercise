@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function toYYHHmmss(date) {
+            function cover(num){
+                return num < 10 ? `0${num}` : num
+            }
+            const cdate = new Date(date)
+            const year = cdate.getFullYear()
+            const month = cover(cdate.getMonth() + 1)
+            const day = cover(cdate.getDate())
+            const hour = cover(cdate.getHours())
+            const minute = cover(cdate.getMinutes())
+            const second = cover(cdate.getSeconds())
+            const time = `${year}-${month}-${day} ${hour}:${minute}:${second}`
+            return time
+        }
+
+        console.log(toYYHHmmss(+new Date()))
+    </script>
+</body>
+
+</html>

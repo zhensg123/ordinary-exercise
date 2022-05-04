@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>无限滚动中的虚拟列表(只渲染可视区域，dom元素可复用)</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no, email=no">
+</head>
+
+<body>
+    <!-- <header> -->
+        <!-- <h1>无限滚动中的虚拟列表-防抖和节流(只渲染可视区域，dom元素可复用)</h1> -->
+        <!-- <h1>无限滚动中的虚拟列表(只渲染可视区域，dom元素可复用)</h1> -->
+    <!-- </header> -->
+    <article class="d-part d-effect">
+        <style>
+
+            .content {
+                height: 300px;
+                overflow: auto;
+                position: relative;
+                will-change: transform;
+                
+            }
+            .viewArea {
+                height: 4700px;
+             max-height: 4700px;
+             position: relative;
+            }
+            .item {
+                min-height: 50px;
+                border-bottom: 1px solid #cccccc;
+                border-top: 1px solid #cccccc;
+                width: 100%;
+                text-align: center;
+                background-color: darkgray;
+                box-sizing: border-box;
+                position: absolute;
+                /* padding: 30px 0;
+                box-sizing: border-box; */
+            }
+        </style>
+            <div class="content">
+                <div class="viewArea">
+                    <div class="item" style='top:0'>0</div>
+                    <div class="item" style='top:50px'>1</div>
+                    <div class="item" style='top:100px'>2</div>
+                    <div class="item" style='top:150px'>3</div>
+                    <div class="item" style='top:200px'>4</div>
+                    <div class="item" style='top:250px'>5</div>
+                    <div class="item" style='top:300px'>6</div>
+                    <div class="item" style='top:350px'>7</div>
+                    <div class="item" style='top:400px'>8</div>
+                    <div class="item" style='top:450px'>9</div>
+                    <div class="item" style='top:400px'>10</div>
+                    <div class="item" style='top:450px'>11</div>
+                </div>
+
+            </div>
+        <script>
+            function throttle(func, wait){
+                let timeout = null
+                return (...arg)=>{
+                    if(timeout) {
+                        return 
+                    }
+                    setTimeout(()=>{
+                        func.apply(this, arg)
+                        timeout = null
+                    }, wait)
+                }
+            }
+            var item = document.querySelector('.viewArea .item');  //需要渲染的单个列表元素
+
+            console.log(item);
+            var start = 0; // 开始位置
+            var pageSize = 12; // 每页展示的数据
+            var total = 100; //数据总长度
+
+            // var itemHeight = 61; // 每个item的高度
+            var itemStyle = getComputedStyle(item); // 获取元素最终样式
+            var itemHeight =  50; // 每个item的高度
+
+            let all = document.querySelectorAll('.viewArea .item'); 
+            // 设置数据列表的总高度
+            // document.querySelector('.container .content').style.height = itemHeight * total + 'px';
+            updateDom(start, pageSize, 0);
+            
+            //更新渲染列表的高度和数据
+            function updateDom(start, pageSize, scrollTop) {
+                const fragment = document.createDocumentFragment();
+                // document.querySelector('.container .content .viewArea').style.transform = 'translateY(' + height + 'px)';
+                for (var i = start, itemIndex = 0, len = start + pageSize; i < len; i++, itemIndex++) {
+                    all[itemIndex].innerHTML = i;
+                    all[itemIndex].style.cssText = `top:${i*50 - scrollTop % 12}px;`;
+                }
+            }
+            // 滚动处理函数
+            var container = document.querySelector('.content');  //可视区域元素
+
+            function handleScroller() {
+
+                var currentScrollTop = container.scrollTop;
+                    // var fixedScrollTop = currentScrollTop - currentScrollTop % itemHeight;  // currentScrollTop % itemHeight这个是为了让滚动效果更自然
+                    var start = Math.floor(currentScrollTop / itemHeight);
+                    console.log(start, currentScrollTop, 'startstart瓦面')
+
+                    if(start <= 88) {
+                        console.log(start, currentScrollTop, 'startstart拉米娜')
+                        updateDom(start, pageSize, currentScrollTop)
+                    }
+            }
+
+            document.querySelector('.content').addEventListener('scroll', handleScroller, false);
+
+
+            
+        </script>
+    </article>
+    </div>
+</body>
+
+</html>
