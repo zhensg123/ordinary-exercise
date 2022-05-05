@@ -134,6 +134,7 @@
                 // 终点平移后得出：y2-y1 = a*(x2 - x1)*(x2 - x1) + b*(x2 - x1)
                 // 即 diffy = a*diffx*diffx + b*diffx;
                 // 可求出常数b的值
+                // 关键是常数的计算  b是一开始就计算好的  关键是后面 x y的计算
                 this.b =
                     (this.diffy - this.radian * this.diffx * this.diffx) / this.diffx;
 
