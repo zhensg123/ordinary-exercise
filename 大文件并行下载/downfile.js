@@ -58,6 +58,7 @@ function concatenate(arrays) {
   async function asyncPool(poolLimit, array, iteratorFn) {
     const ret = []; // 存储所有的异步任务
     const executing = []; // 存储正在执行的异步任务
+    console.log(array, '33333333')
     for (const item of array) {
       // 调用iteratorFn函数创建异步任务
       const p = Promise.resolve().then(() => iteratorFn(item, array));
@@ -89,6 +90,7 @@ function concatenate(arrays) {
         return getBinaryContent(url, start, end, i);
       }
     );
+    console.log(results, 'resultsresults')
     const sortedBuffers = results
       .map((item) => new Uint8Array(item.buffer));
     return concatenate(sortedBuffers);
