@@ -1,15 +1,5 @@
-function concatenate(arrays) {
-    if (!arrays.length) return null;
-    let totalLength = arrays.reduce((acc, value) => acc + value.length, 0);
-    let result = new Uint8Array(totalLength);
-    let length = 0;
-    for (let array of arrays) {
-      result.set(array, length);
-      length += array.length;
-    }
-    return result;
-  }
-  
+
+  // 获取文件大小
   function getContentLength(url) {
     return new Promise((resolve, reject) => {
       let xhr = new XMLHttpRequest();
@@ -24,7 +14,8 @@ function concatenate(arrays) {
       xhr.onerror = reject;
     });
   }
-  
+
+  // 获取文件各部分大小
   function getBinaryContent(url, start, end, i) {
     return new Promise((resolve, reject) => {
       try {
@@ -32,7 +23,10 @@ function concatenate(arrays) {
         xhr.open("GET", url, true);
         xhr.setRequestHeader("range", `bytes=${start}-${end}`); // 请求头上设置范围请求信息
         xhr.responseType = "arraybuffer"; // 设置返回的类型为arraybuffer
-        xhr.onload = function () {
+
+        xhr.onload = function (res) {
+          console.log(xhr, xhr.response, 'xhr.responsexhr.response')
+
           resolve({
             index: i, // 文件块的索引
             buffer: xhr.response, // 范围请求对应的数据
@@ -45,6 +39,20 @@ function concatenate(arrays) {
     });
   }
   
+  // 拼接数据
+  function concatenate(arrays) {
+    if (!arrays.length) return null;
+    let totalLength = arrays.reduce((acc, value) => acc + value.length, 0);
+    let result = new Uint8Array(totalLength);
+    let length = 0;
+    for (let array of arrays) {
+      result.set(array, length);
+      length += array.length;
+    }
+    return result;
+  }
+  
+  // 保存数据
   function saveAs({ name, buffers, mime = "application/octet-stream" }) {
     const blob = new Blob([buffers], { type: mime });
     const blobUrl = URL.createObjectURL(blob);
@@ -54,6 +62,9 @@ function concatenate(arrays) {
     a.click();
     URL.revokeObjectURL(blob);
   }
+  
+
+
   
   async function asyncPool(poolLimit, array, iteratorFn) {
     const ret = []; // 存储所有的异步任务
