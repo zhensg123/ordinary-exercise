@@ -20,7 +20,7 @@
         console.log("多线程下载开始: " + +new Date());
         download({
           url,
-          chunkSize: 0.1 * 1024 * 1024,
+          chunkSize: 1 * 1024 * 1024,
           poolLimit: 6,
         }).then((buffers) => {
           console.log("多线程下载结束: " + +new Date());

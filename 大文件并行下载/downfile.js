@@ -54,7 +54,7 @@
   
   // 保存数据
   function saveAs({ name, buffers, mime = "application/octet-stream" }) {
-    const blob = new Blob([buffers], { type: mime });
+    const blob = new Blob([buffers]);
     const blobUrl = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.download = name || Math.random();
@@ -98,7 +98,8 @@
       (i) => {
         let start = i * chunkSize;
         let end = i + 1 == chunks ? contentLength - 1 : (i + 1) * chunkSize - 1;
-        return getBinaryContent(url, parseInt(start), parseInt(end), i);
+        console.log(start, end, 90909090)
+        return getBinaryContent(url, start, end, i);
       }
     );
     console.log(results, 'resultsresults')
