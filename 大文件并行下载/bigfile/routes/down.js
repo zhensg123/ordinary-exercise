@@ -15,12 +15,12 @@ router.head('/', function(req, res, next) {
     })
 });
 router.get('/', function(req, res, next) {
-  res.set('Content-Type', 'application/octet-stream')
+  res.set('Content-Type', 'application/json')
 
     const startEnd = req.get('Range')
-    const start = startEnd.split('=')[1].split('-')[0]
-    const end = startEnd.split('=')[1].split('-')[1]
-    console.log(start, end, '333333333333')
+    const start = Number(startEnd.split('=')[1].split('-')[0])
+    const end = Number(startEnd.split('=')[1].split('-')[1])
+    console.log(typeof start, end, '333333333333')
 
     // fs.readFile(path.resolve(__dirname, '../file/java.zip'), (error, data)=>{
     //   if(error) {
@@ -32,11 +32,22 @@ router.get('/', function(req, res, next) {
     // })
     // ctx.response.status = 206;
     const { size } = fs.statSync(path.join(__dirname, '../file/java.zip'));
+
+    if (start >= size || end >= size) {
+      res.status(416).end()
+
+      return;
+  }
     console.log(size, 999999999)
-    // res.set('Accept-Ranges', 'bytes');
-    // res.set('Content-Range', `bytes ${start}-${end ? end : size - 1}/${size}`);
-    console.log(fs.createReadStream(path.join(__dirname, '../file/java.zip'), { start, end }), 909090)
-    // res.send(fs.createReadStream(path.join(__dirname, './static/', filename), { start, end }))
+    res.status(216)
+    res.set('Accept-Ranges', 'bytes');
+    res.set('Content-Range', `bytes ${start}-${end ? end : size - 1}/${size}`);
+    const read = fs.createReadStream(path.resolve(__dirname, '../file/java.zip'), { start, end })
+    read.on('data', (data)=>{
+      res.end(data)
+
+    })
+    // console.log(fs.createReadStream(path.join(__dirname, '../file/java.zip'), { start, end }), 909090)
 
 });
 module.exports = router;

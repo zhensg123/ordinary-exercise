@@ -22,7 +22,7 @@
         let xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
         xhr.setRequestHeader("range", `bytes=${start}-${end}`); // 请求头上设置范围请求信息
-        xhr.responseType = "arraybuffer"; // 设置返回的类型为arraybuffer
+        xhr.responseType = "blob"; // 设置返回的类型为blob
 
         xhr.onload = function (res) {
           console.log(xhr, xhr.response, 'xhr.responsexhr.response')
@@ -98,7 +98,7 @@
       (i) => {
         let start = i * chunkSize;
         let end = i + 1 == chunks ? contentLength - 1 : (i + 1) * chunkSize - 1;
-        return getBinaryContent(url, start, end, i);
+        return getBinaryContent(url, parseInt(start), parseInt(end), i);
       }
     );
     console.log(results, 'resultsresults')
